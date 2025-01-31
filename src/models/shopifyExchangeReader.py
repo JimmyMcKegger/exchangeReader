@@ -23,12 +23,34 @@ class ShopifyExchangeReader:
         }
 
     def analyze_exchange(self, order_data: Dict) -> List[Exchange]:
+        """
+        Analyzes completed exchanges from a Shopify order and categorizes each exchange.
+
+        This method processes exchange data to determine:
+        - If a customer paid more for a new item
+        - If a customer was refunded for choosing a cheaper item
+        - If the exchange was for the same SKU (e.g., different size)
+
+        Only processes exchanges that are marked as completed (completed_at is not empty)
+        as incomplete exchanges may have incomplete data.
+
+        Args:
+            order_data (Dict): Raw order data from Shopify containing exchange information
+
+        Returns:
+            List[Exchange]: A list of Exchange objects containing categorized exchange data
+        """
         exchanges = []
 
         if not order_data or "exchangeV2s" not in order_data:
             return exchanges
 
         for exchange in order_data["exchangeV2s"]["nodes"]:
+            # Skip exchanges that aren't completed
+            if not exchange.get("completedAt"):
+                continue
+
+            # Skip exchanges without complete line item information
             if (
                 not exchange["additions"]["lineItems"]
                 or not exchange["returns"]["lineItems"]
@@ -58,6 +80,8 @@ class ShopifyExchangeReader:
                     original_sku=original_sku,
                     new_sku=new_sku,
                     exchange_type=exchange_type,
+                    created_at=exchange["createdAt"],
+                    completed_at=exchange["completedAt"],
                 )
             )
 

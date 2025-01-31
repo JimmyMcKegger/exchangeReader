@@ -11,14 +11,17 @@ class Exchange:
     original_sku: str
     new_sku: str
     exchange_type: ExchangeType
+    created_at: str
+    completed_at: str
 
-    def __str__(self):
-        return f"""
-            Order ID: {self.order_id}
-            Exchange ID: {self.exchange_id}
-            Original Amount: {self.original_amount}
-            New Amount: {self.new_amount}
-            Original SKU: {self.original_sku}
-            New SKU: {self.new_sku}
-            Exchange Type: {self.exchange_type}
-        """
+    def __str__(self) -> str:
+        return (
+            f"\nOrder {self.order_id}:\n"
+            f"Exchange Type: {self.exchange_type.value}\n"
+            f"Original Amount: ${self.original_amount}\n"
+            f"New Amount: ${self.new_amount}\n"
+            f"Original SKU: {self.original_sku}\n"
+            f"New SKU: {self.new_sku}\n"
+            f"Created At: {self.created_at}\n"
+            f"Completed At: {self.completed_at}"
+        )

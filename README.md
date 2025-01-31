@@ -1,6 +1,6 @@
-# Shopify Exchange Analyzer
+# Shopify Exchange Reader
 
-A Python tool to analyze exchanges on Shopify orders and categorize them based on price differences and SKU changes.
+A Python tool to read exchanges from Shopify POS and categorize them based on price differences and SKU changes.
 
 ## Prerequisites
 

@@ -13,6 +13,10 @@ A Python tool to analyze exchanges on Shopify orders and categorize them based o
 
 1. Clone the repository:
 
+```bash
+git clone https://github.com/JimmyMcKegger/exchangeReader.git
+```
+
 2. Install dependencies:
 ```bash
 poetry install

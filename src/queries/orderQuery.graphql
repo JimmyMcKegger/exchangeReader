@@ -1,0 +1,111 @@
+query getOrderExchanges($orderId: ID!) {
+  order(id: $orderId) {
+    id
+    createdAt
+    updatedAt
+    unpaid
+    returnStatus
+    displayFinancialStatus
+    displayFulfillmentStatus
+    totalCapturableSet {
+      shopMoney {
+        amount
+      }
+    }
+    totalReceivedSet {
+      shopMoney {
+        amount
+      }
+    }
+    totalRefundedSet {
+      shopMoney {
+        amount
+      }
+    }
+    totalOutstandingSet {
+      shopMoney {
+        amount
+      }
+    }
+    exchangeV2s(first: 5) {
+      nodes {
+        id
+        location {
+          id
+          name
+        }
+        createdAt
+        completedAt
+        note
+        additions {
+          lineItems {
+            title
+            sku
+            variant {
+              id
+            }
+            quantity
+            requiresShipping
+            originalUnitPriceSet {
+              shopMoney {
+                amount
+              }
+            }
+            originalTotalSet {
+              shopMoney {
+                amount
+              }
+            }
+            discountedTotalSet {
+              shopMoney {
+                amount
+              }
+            }
+          }
+          subtotalPriceSet {
+            shopMoney {
+              amount
+            }
+          }
+          totalPriceSet {
+            shopMoney {
+              amount
+            }
+          }
+        }
+        returns {
+          lineItems {
+            lineItem {
+              id
+              sku
+            }
+            variant {
+              id
+            }
+            quantity
+          }
+          totalPriceSet {
+            shopMoney {
+              amount
+            }
+          }
+        }
+        refunds {
+          totalRefundedSet {
+            shopMoney {
+              amount
+            }
+          }
+          orderAdjustments(first: 3) {
+            nodes {
+              reason
+              amountSet {
+                __typename
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
